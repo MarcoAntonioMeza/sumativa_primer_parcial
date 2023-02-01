@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block titulo %} Login {% endblock %}
+
+{% block contenido %}
+
+<br>
+<div class="row lead">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header text-center">
+                Iniciar sesión
+            </div>
+            <div class="card-body">
+                <center><img src="https://atg-prod-scalar.s3.amazonaws.com/studentpower/media/user%20avatar.png" alt="user" height="200px"></center>
+                <form action="{% url 'login' %}"  method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Correo electrónico</label>
+                        {{ loginForm.correo }}
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Contraseña</label>
+                        {{ loginForm.password }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Inisiar sesión</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+{% endblock %}

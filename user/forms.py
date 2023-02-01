@@ -23,3 +23,57 @@ class LoginUsuario(forms.Form):
             'class': 'form-control',
             })
     )
+
+
+
+class RegistrarUsuario(forms.Form):
+    correo = forms.EmailField(
+        widget=forms.TextInput(
+            attrs={
+                'id': 'signupEmail',
+                'type': 'email',
+                'class': 'form-control'
+            }
+        )
+    )
+
+    nombre = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(
+            attrs={
+                'type': 'text',
+                'class': 'form-control'
+            }
+        ))
+
+    apellidos = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(
+            attrs={
+                'type': 'text',
+                'class': 'form-control'
+            }
+        ))
+        
+    password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                'id': 'signupPassword',
+                'type': 'password',
+                'class': 'form-control'
+            }
+        ))
+
+    password2 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                'type': 'password',
+                'class': 'form-control'
+            }
+        ))
+
+    def clean_password2(self):
+        cd = self.cleaned_data
+        if cd['password'] != cd['password2']:
+            raise forms.ValidationError('Las Contraseñas no coinciden')
+        return cd['password2']

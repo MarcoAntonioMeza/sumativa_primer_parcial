@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block titulo %} Registrarse {% endblock %}
+
+{% block contenido %}
+
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <form id="register" class="text-center" action="" method="post">
+            {% csrf_token %}
+            <div class="form-outline form-auth-mdb mb-4">
+              {{ signupForm.correo}}
+              <label class="form-label" style="margin-left: 0px;">Correo Electronico</label>
+            </div>
+
+            <div class="form-outline form-auth-mdb mb-4">
+              {{ signupForm.nombre }}
+              <label class="form-label" style="margin-left: 0px;">Nombre</label>
+            </div>
+
+            <div class="form-outline form-auth-mdb mb-4">
+              {{ signupForm.apellidos }}
+              <label class="form-label" style="margin-left: 0px;">Apellido</label>
+            </div>
+
+            <div class="form-outline form-auth-mdb mb-4">
+              {{ signupForm.password }}
+              <label class="form-label" style="margin-left: 0px;">Your password
+              </label>
+            </div>
+
+            <div class="form-outline form-auth-mdb mb-4">
+              {{ signupForm.password2 }}
+              <label class="form-label" style="margin-left: 0px;">Repeat password
+              </label>
+
+            </div>
+
+            <button class="btn btn-primary btn-block mb-3" type="submit">Registrar</button>
+          </form>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+
+{%endblock%}

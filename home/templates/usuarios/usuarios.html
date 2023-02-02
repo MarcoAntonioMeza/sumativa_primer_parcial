@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block titulo %} Usuarios {% endblock %}
+
+{% block contenido %}
+
+<br>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header text-center lead">
+                Listado de usuarios
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Correo</th>
+                            <th scope="col">Correo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for usuario in usuarios%}
+                        <tr>
+                            <th scope="row">{{ usuario.id }}</th>
+                            <td>{{ usuario }}</td>
+                            <td>{{ usuario.correo }}</td>
+                            <td>@mdo</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+
+{%endblock%}

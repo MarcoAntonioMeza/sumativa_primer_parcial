@@ -23,18 +23,23 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-
+                {% if request.user.is_authenticated %}
                 <li class="nav-item active">
-                    <a class="nav-link" href="#"> Inicio <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{% url 'home' %}"> Home <span class="sr-only">(current)</span></a>
                 </li>
+                {% else %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'index' %}"> Inicio <span class="sr-only">(current)</span></a>
+                </li>
+                {% endif %}
 
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Ayuda</a>
+                    <a class="nav-link" href="{% url 'ayuda' %}">Ayuda</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contactanos</a>
+                    <a class="nav-link" href="{% url 'contacto' %}">Contactanos</a>
                 </li>
                 {% if not request.user.is_authenticated %}
                 <li class="nav-item">
@@ -49,7 +54,7 @@
                     <a class="nav-link" href="{% url 'usuarios' %}">Usuarios</a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="#">Buzón</a>
+                    <a class="nav-link" href="{% url 'buzon' %}">Buzón</a>
                 </li>
                 <li class="nav-item ">
                     <a class="nav-link" href="{% url 'cerrar_sesion' %}">Cerrar sesión</a>
@@ -69,7 +74,7 @@
 
         </div>
     </nav>
-
+    <br>
     <div class="container">
         {% block contenido %}
 

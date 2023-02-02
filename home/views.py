@@ -58,6 +58,19 @@ def cerrar_sesion(request):
 def home(request):
     return render(request,'home/home.html')
 
+def index(request):
+    return render(request,'home/index.html')
+
+def contacto(request):
+    return render(request,'home/contacto.html')
+
+def ayuda(request):
+    return render(request,'home/ayuda.html')
+
+def buzon(request):
+    return render(request,'home/buzon.html')
+
+@login_required
 def usuarios(request):
     usuarios = Usuario.objects.all()
     #usuarios = list(Usuario.objects.values())

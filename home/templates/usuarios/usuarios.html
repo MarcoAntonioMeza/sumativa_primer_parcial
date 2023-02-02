@@ -19,7 +19,7 @@
                             <th scope="col">ID</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Correo</th>
-                            <th scope="col">Correo</th>
+                            <th scope="col">Esta activo</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -28,7 +28,12 @@
                             <th scope="row">{{ usuario.id }}</th>
                             <td>{{ usuario }}</td>
                             <td>{{ usuario.correo }}</td>
-                            <td>@mdo</td>
+                            {% if usuario.is_active %}
+                            <td>Esta activo</td>
+                            {% else %}
+                            <td>No esta activo</td>
+                            {%endif%}
+
                         </tr>
                         {% endfor %}
                     </tbody>

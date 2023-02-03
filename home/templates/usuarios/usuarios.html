@@ -11,6 +11,23 @@
         <div class="card">
             <div class="card-header text-center lead">
                 Listado de usuarios
+                <br>
+                <br>
+
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <form class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" type="search" id="buscar"
+                                placeholder="Buscar por nombre" aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+                        </form>
+                    </div>
+                    <div class="col-md-3"></div>
+
+                </div>
+
+
             </div>
             <div class="card-body">
                 <table class="table table-striped">
@@ -18,16 +35,18 @@
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Nombre</th>
+                            <th scope="col">Apellidos</th>
                             <th scope="col">Correo</th>
                             <th scope="col">Esta activo</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tabla">
                         {% for usuario in usuarios%}
                         <tr>
                             <th scope="row">{{ usuario.id }}</th>
-                            <td>{{ usuario }}</td>
-                            <td>{{ usuario.correo }}</td>
+                            <td>{{ usuario.nombre }}</td>
+                            <td>{{ usuario.apellidos}}</td>
+                            <td>{{ usuario.email }}</td>
                             {% if usuario.is_active %}
                             <td>Esta activo</td>
                             {% else %}
@@ -44,5 +63,50 @@
     <div class="col-md-2"></div>
 </div>
 
+
+<script>
+    $(document).ready(function () {
+        $('#buscar').keyup(function (e) {
+            consulta = $("#buscar").val();
+            let template = "";
+            $.ajax({
+                data: { 'nombre': consulta },
+                url: '/buscar',
+                type: 'get',
+                success: function (data) {
+                    if (data.length != 0) {
+                        data.forEach(user => {
+
+                            if (user.is_active == true) {
+                                template += ` <tr>
+                                    <td class="fw-normal">${user.id}</td>
+                                    <td class="fw-normal">${user.nombre}</td>
+                                    <td class="fw-normal">${user.apellidos}</td>
+                                    <td class="fw-normal">${user.email}</td>
+                                    <td class="fw-normal">Esta activo</td>
+                                <tr>
+                                    `;
+                            }
+                        });
+                        
+                    }else{
+                        template +=`
+                        <tr>
+                <td colspan="5" class="table-danger text-center">Sin resultados</td>
+            </tr
+                        `; 
+                    }
+                    $('#tabla').html(template);
+
+                },
+                error: function (message) {
+                    console.log(message);
+                }
+            });
+
+        });
+    });
+
+</script>
 
 {%endblock%}

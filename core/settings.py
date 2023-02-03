@@ -126,3 +126,12 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "user.Usuario"
+
+# Config demo mail
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "mail.codevs.com.mx"
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "test@codevs.com.mx"
+EMAIL_HOST_PASSWORD = "hJid{nbL;j3%"

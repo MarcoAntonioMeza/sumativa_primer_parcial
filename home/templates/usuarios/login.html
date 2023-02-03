@@ -23,13 +23,16 @@
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="exampleInputEmail1">Correo electrónico</label>
-                        {{ loginForm.correo }}
+                        {{ loginForm.email }}
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Contraseña</label>
                         {{ loginForm.password }}
                     </div>
+                    <center>
                     <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+                    <a name="" id="" class="btn btn-primary" href="{% url 'password_reset' %}" role="button">Olvide mi contraseña</a>
+                </center>
                 </form>
             </div>
         </div>

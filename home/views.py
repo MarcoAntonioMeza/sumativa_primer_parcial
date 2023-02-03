@@ -7,6 +7,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from user.forms import *
 from user.models import Usuario
 
+import json
+
 # Create your views here.
 
 
@@ -14,9 +16,9 @@ def login_usurio(request):
     if request.POST:
         login_form = LoginUsuario(request.POST or None)
         if login_form.is_valid():
-            correo = login_form.cleaned_data.get('correo')
+            correo = login_form.cleaned_data.get('email')
             password = login_form.cleaned_data.get('password')
-            user = authenticate(request, correo=correo, password=password)
+            user = authenticate(request, email=correo, password=password)
             if user is not None:
                 login(request, user)
                 return redirect('home')
@@ -31,13 +33,13 @@ def registar_usuario(request):
     if request.POST:
         signup_form = RegistrarUsuario(request.POST or None)
         if signup_form.is_valid():
-            correo = signup_form.cleaned_data.get('correo')
+            correo = signup_form.cleaned_data.get('email')
             nombre = signup_form.cleaned_data.get('nombre')
             apellidos = signup_form.cleaned_data.get('apellidos')
             password = signup_form.cleaned_data.get('password')
             try:
                 user = get_user_model().objects.create(
-                    correo=correo,
+                    email=correo,
                     nombre=nombre,
                     apellidos=apellidos,
                     password=make_password(password),
@@ -49,32 +51,54 @@ def registar_usuario(request):
             except Exception as e:
                 print(e)
                 return JsonResponse({'detail': f'{e}'})
-    return render(request,'usuarios/registrar.html')
+    return render(request, 'usuarios/registrar.html')
+
 
 def cerrar_sesion(request):
     logout(request)
     return redirect('login_usuario')
 
+
+@login_required(login_url='login_usuario')
 def home(request):
-    return render(request,'home/home.html')
+    return render(request, 'home/home.html')
+
 
 def index(request):
-    return render(request,'home/index.html')
+    return render(request, 'home/index.html')
+
 
 def contacto(request):
-    return render(request,'home/contacto.html')
+    return render(request, 'home/contacto.html')
+
 
 def ayuda(request):
-    return render(request,'home/ayuda.html')
+    return render(request, 'home/ayuda.html')
 
+
+@login_required(login_url='login_usuario')
 def buzon(request):
-    return render(request,'home/buzon.html')
+    return render(request, 'home/buzon.html')
 
-@login_required
+
+@login_required(login_url='login_usuario')
 def usuarios(request):
     usuarios = Usuario.objects.all()
-    #usuarios = list(Usuario.objects.values())
-    #return JsonResponse(usuarios)
-    return render(request,'usuarios/usuarios.html',{
-        'usuarios':usuarios
+    # usuarios = list(Usuario.objects.values())
+    # return JsonResponse(usuarios)
+    return render(request, 'usuarios/usuarios.html', {
+        'usuarios': usuarios
     })
+
+
+def buscar(request):
+    #print(request.GET['nombre'])
+    #print( Usuario.objects.all())
+    if request.method == "GET":
+        usuarios = list(Usuario.objects.filter( nombre__contains=request.GET['nombre']).values())
+        #usuarios = Usuario.objects.all().values()
+        #print(HttpResponse(json.dumps(list(usuarios)), content_type='application/json'))
+        return JsonResponse(usuarios, safe=False)
+    else:
+        return HttpResponse("Solo Ajax")
+    

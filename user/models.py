@@ -10,9 +10,9 @@ class ManejadorUsuario(BaseUserManager):
         if not correo:
             raise ValueError(('Los usuarios deben tener un correo válido'))
 
-        correo = self.normalize_email(correo)
+        email = self.normalize_email(correo)
         usuario = self.model(
-                correo = correo,
+                email = email,
                 nombre = nombre,
                 apellidos = apellidos,
                 **otros
@@ -31,7 +31,7 @@ class ManejadorUsuario(BaseUserManager):
         otros.setdefault('is_active', True)
 
         usuario =  self.create_user(
-            correo,
+            email= correo,
             password=password,
             nombre = nombre,
             apellidos = apellidos,
@@ -55,7 +55,7 @@ class ManejadorUsuario(BaseUserManager):
         
 
 class Usuario(AbstractBaseUser,PermissionsMixin):
-    correo = models.EmailField(verbose_name= 'correo electrónico', unique=True)
+    email = models.EmailField(verbose_name= 'correo electrónico', unique=True)
     nombre = models.CharField(max_length=100)
     apellidos = models.CharField(max_length=100)
 
@@ -66,7 +66,7 @@ class Usuario(AbstractBaseUser,PermissionsMixin):
 
     objects = ManejadorUsuario()
 
-    USERNAME_FIELD = 'correo'
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['nombre','apellidos']
 
     def __str__(self):

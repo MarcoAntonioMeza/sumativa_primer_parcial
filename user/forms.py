@@ -4,9 +4,9 @@ from .models import Usuario
 class LoginUsuario(forms.Form):
     class Meta():
         model = Usuario
-        fields = ['correo','password']
+        fields = ['email','password']
 
-    correo = forms.EmailField(
+    email = forms.EmailField(
         widget=forms.TextInput(
             attrs={
                 'id': 'loginEmail',
@@ -27,7 +27,7 @@ class LoginUsuario(forms.Form):
 
 
 class RegistrarUsuario(forms.Form):
-    correo = forms.EmailField(
+    email = forms.EmailField(
         widget=forms.TextInput(
             attrs={
                 'id': 'signupEmail',

@@ -1,7 +1,10 @@
 from django.urls import path
 from . import views
+from django.conf.urls import handler404
 from django.contrib.auth import views as auth_views
 
+
+handler404 = views.pag_404_not_found
 
 urlpatterns = [
     #Url para  el inicio de la aplicacion inicio
@@ -22,4 +25,7 @@ urlpatterns = [
     path('reset_password_send/', auth_views.PasswordResetDoneView.as_view(template_name="autenticacion/mensaje.html"), name='password_reset_done'),
     path('reset/<uidb64>/<token>', auth_views.PasswordResetConfirmView.as_view(template_name="autenticacion/password-confirm.html"), name='password_reset_confirm'),
     path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+
+    
+
 ]

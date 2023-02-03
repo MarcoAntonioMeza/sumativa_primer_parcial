@@ -48,9 +48,13 @@
                             <td>{{ usuario.apellidos}}</td>
                             <td>{{ usuario.email }}</td>
                             {% if usuario.is_active %}
-                            <td>Esta activo</td>
+                            <td class="text-center"><span class="text-success">
+                                    <i class="bi bi-bookmark-check"></i>
+                                </span></td>
                             {% else %}
-                            <td>No esta activo</td>
+                            <td class="text-center"><span class="text-danger">
+                                <i class="bi bi-x-octagon-fill"></i>
+                            </span></td>
                             {%endif%}
 
                         </tr>
@@ -88,13 +92,13 @@
                                     `;
                             }
                         });
-                        
-                    }else{
-                        template +=`
+
+                    } else {
+                        template += `
                         <tr>
                 <td colspan="5" class="table-danger text-center">Sin resultados</td>
             </tr
-                        `; 
+                        `;
                     }
                     $('#tabla').html(template);
 

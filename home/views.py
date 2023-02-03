@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.defaults import page_not_found
 from user.forms import *
 from user.models import Usuario
 
@@ -92,13 +93,15 @@ def usuarios(request):
 
 
 def buscar(request):
-    #print(request.GET['nombre'])
-    #print( Usuario.objects.all())
     if request.method == "GET":
         usuarios = list(Usuario.objects.filter( nombre__contains=request.GET['nombre']).values())
-        #usuarios = Usuario.objects.all().values()
-        #print(HttpResponse(json.dumps(list(usuarios)), content_type='application/json'))
         return JsonResponse(usuarios, safe=False)
     else:
         return HttpResponse("Solo Ajax")
     
+
+
+def pag_404_not_found(request, exception, template_name="error/404.html"):
+    response = render("404.html")
+    response.status_code=404
+    return response

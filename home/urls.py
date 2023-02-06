@@ -15,6 +15,7 @@ urlpatterns = [
     path('buzon/', views.buzon, name='buzon'),
     path('iniciar-sesion/', views.login_usurio, name='login_usuario'),
     path('registrar/', views.registar_usuario, name='registar_usuario'),
+    path('registrar-usuario/', views.registar_usuarios, name='registrar_usuarios'),
     path('cerrar-sesion/', views.cerrar_sesion, name='cerrar_sesion'),
     path('home/', views.home, name='home'),
     path('usuarios/', views.usuarios, name='usuarios'),

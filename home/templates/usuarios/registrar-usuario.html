@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block titulo %} Registrarse {% endblock %}
+
+{% block contenido %}
+<br>
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header text-center">
+        Registrarse
+      </div>
+      <div class="card-body">
+        <form id="register" class="" action="{% url 'registrar_usuarios' %}" method="post">
+          {% csrf_token %}
+          <div class="form-outline form-auth-mdb mb-4">
+            <label class="form-label" style="margin-left: 0px;">Correo Electronico</label>
+            {{ signupForm.email}}
+          </div>
+
+          <div class="form-outline form-auth-mdb mb-4">
+            <label class="form-label" style="margin-left: 0px;">Nombre</label>
+            {{ signupForm.nombre }}
+          </div>
+
+          <div class="form-outline form-auth-mdb mb-4">
+            <label class="form-label" style="margin-left: 0px;">Apellidos</label>
+            {{ signupForm.apellidos }}
+          </div>
+
+          <div class="form-outline form-auth-mdb mb-4">
+            <label class="form-label" style="margin-left: 0px;">Contraseña
+
+            </label>
+            {{ signupForm.password }}
+          </div>
+
+          <div class="form-outline form-auth-mdb mb-4">
+
+            <label class="form-label" style="margin-left: 0px;">Repite tu contraseña</label>
+            {{ signupForm.password2 }}
+
+          </div>
+
+          <button class="btn btn-primary btn-block mb-3" type="submit">Registrar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3"></div>
+</div>
+
+{%endblock%}

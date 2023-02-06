@@ -30,8 +30,35 @@ def login_usurio(request):
     return render(request, 'usuarios/login.html')
 
 
+def registar_usuarios(request):
+    if request.POST:
+        print(request.POST)
+        signup_form = RegistrarUsuario(request.POST or None)
+        if signup_form.is_valid():
+            correo = signup_form.cleaned_data.get('email')
+            nombre = signup_form.cleaned_data.get('nombre')
+            apellidos = signup_form.cleaned_data.get('apellidos')
+            password = signup_form.cleaned_data.get('password')
+            try:
+                user = get_user_model().objects.create(
+                    email=correo,
+                    nombre=nombre,
+                    apellidos=apellidos,
+                    password=make_password(password),
+                    is_active=True
+                )
+                #login(request, user)
+                return redirect('usuarios')
+
+            except Exception as e:
+                print(e)
+                return JsonResponse({'detail': f'{e}'})
+    return render(request, 'usuarios/registrar-usuario.html')
+
+
 def registar_usuario(request):
     if request.POST:
+        print(request.POST)
         signup_form = RegistrarUsuario(request.POST or None)
         if signup_form.is_valid():
             correo = signup_form.cleaned_data.get('email')

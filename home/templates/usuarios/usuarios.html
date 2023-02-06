@@ -20,10 +20,12 @@
                         <form class="form-inline my-2 my-lg-0">
                             <input class="form-control mr-sm-2" type="search" id="buscar"
                                 placeholder="Buscar por nombre" aria-label="Search">
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+                            <button class="btn btn-outline-success my-2 my-sm-0" >Buscar</button>
                         </form>
                     </div>
-                    <div class="col-md-3"></div>
+                    <div class="col-md-3 text-center">
+                        <a name="" id="" class="btn btn-primary" href="{% url 'registrar_usuarios' %}" role="button">Agregar usuario</a>
+                    </div>
 
                 </div>
 
@@ -37,7 +39,8 @@
                             <th scope="col">Nombre</th>
                             <th scope="col">Apellidos</th>
                             <th scope="col">Correo</th>
-                            <th scope="col">Esta activo</th>
+                            <th scope="col">Activo</th>
+                            <th scope="col">Staff</th>
                         </tr>
                     </thead>
                     <tbody id="tabla">
@@ -48,6 +51,15 @@
                             <td>{{ usuario.apellidos}}</td>
                             <td>{{ usuario.email }}</td>
                             {% if usuario.is_active %}
+                            <td class="text-center"><span class="text-success">
+                                    <i class="bi bi-bookmark-check"></i>
+                                </span></td>
+                            {% else %}
+                            <td class="text-center"><span class="text-danger">
+                                <i class="bi bi-x-octagon-fill"></i>
+                            </span></td>
+                            {%endif%}
+                            {% if usuario.is_staff %}
                             <td class="text-center"><span class="text-success">
                                     <i class="bi bi-bookmark-check"></i>
                                 </span></td>
@@ -82,21 +94,73 @@
                         data.forEach(user => {
 
                             if (user.is_active == true) {
-                                template += ` <tr>
+                                if(user.is_staff==true){
+                                    template += ` <tr>
                                     <td class="fw-normal">${user.id}</td>
                                     <td class="fw-normal">${user.nombre}</td>
                                     <td class="fw-normal">${user.apellidos}</td>
                                     <td class="fw-normal">${user.email}</td>
-                                    <td class="fw-normal">Esta activo</td>
-                                <tr>
+                                    <td class="text-center"><span class="text-success">
+                                    <i class="bi bi-bookmark-check"></i>
+                                </span></td>
+                                
+                                    <td class="text-center"><span class="text-success">
+                                    <i class="bi bi-bookmark-check"></i>
+                                </span></td>
+                                
                                     `;
+                                }else{
+                                    template += ` <tr>
+                                    <td class="fw-normal">${user.id}</td>
+                                    <td class="fw-normal">${user.nombre}</td>
+                                    <td class="fw-normal">${user.apellidos}</td>
+                                    <td class="fw-normal">${user.email}</td>
+                                    <td class="text-center"><span class="text-success">
+                                    <i class="bi bi-bookmark-check"></i>
+                                </span></td>
+                                <td class="text-center"><span class="text-danger">
+                                <i class="bi bi-x-octagon-fill"></i>
+                            </span></td>
+                                    `;
+                                }
+                                
+                            }else{
+                                if(user.is_staff==true){
+                                    template += ` <tr>
+                                    <td class="fw-normal">${user.id}</td>
+                                    <td class="fw-normal">${user.nombre}</td>
+                                    <td class="fw-normal">${user.apellidos}</td>
+                                    <td class="fw-normal">${user.email}</td>
+                                    <td class="text-center"><span class="text-danger">
+                                <i class="bi bi-x-octagon-fill"></i>
+                            </span></td>
+                            <td class="text-center"><span class="text-success">
+                                    <i class="bi bi-bookmark-check"></i>
+                                </span></td>
+                                    `;
+                                }
+                                else{
+                                    template += ` <tr>
+                                    <td class="fw-normal">${user.id}</td>
+                                    <td class="fw-normal">${user.nombre}</td>
+                                    <td class="fw-normal">${user.apellidos}</td>
+                                    <td class="fw-normal">${user.email}</td>
+                                    <td class="text-center"><span class="text-danger">
+                                <i class="bi bi-x-octagon-fill"></i>
+                            </span></td>
+                            <td class="text-center"><span class="text-danger">
+                                <i class="bi bi-x-octagon-fill"></i>
+                            </span></td>
+                                    `;
+                                }
+                                
                             }
                         });
 
                     } else {
                         template += `
                         <tr>
-                <td colspan="5" class="table-danger text-center">Sin resultados</td>
+                <td colspan="6" class="table-danger text-center">Sin resultados</td>
             </tr
                         `;
                     }

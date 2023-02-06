@@ -4,6 +4,11 @@ from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,Permis
 
 # Create your models here.
 
+status_user =[
+    (True, 'Si'),
+    (False,'No')
+]
+
 class ManejadorUsuario(BaseUserManager):
 
     def create_user(self, correo, password ,nombre, apellidos,**otros):
@@ -59,7 +64,11 @@ class Usuario(AbstractBaseUser,PermissionsMixin):
     nombre = models.CharField(max_length=100)
     apellidos = models.CharField(max_length=100)
 
-
+    """        null = False,
+        blank=False,
+        choices= status_user,
+        default=0
+"""
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(('Activo'),default=True)
     

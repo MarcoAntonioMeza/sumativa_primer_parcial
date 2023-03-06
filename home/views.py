@@ -26,7 +26,7 @@ def login_usurio(request):
                 key = totp.generar_key()
                 codigo = totp.generar_codigo(key)
                 a = envio.send_user_mail(correo,codigo)
-                envio.msg_what(codigo)
+                #envio.msg_what(codigo)
                 print(a)
 
                 #user = Usuario.objects.get(email=correo)

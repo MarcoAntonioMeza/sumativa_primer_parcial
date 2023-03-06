@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block titulo %} Verificar usuario {% endblock %}
+
+{% block contenido %}
+
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="card">
+            <i class="fa-solid fa-user-plus fa-10x text-center"></i>
+
+            <div class="card-body">
+                <p class="card-text lead text-justify">Se ha enviado un código de verificación a su correo  {{ correo }} .</p>
+
+                <form action="{% url 'codigo' %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Ingresa el código</label>
+                        <input type="number" class="form-control" name="code"
+                            placeholder="123456">
+                    </div>
+                    <div class="form-group">
+                        
+                        <input type="hidden" class="form-control" name="dino"
+                            value="{{ dino_se }}">
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" class="form-control" name="correo"
+                            value="{{ correo }}">
+                    </div>
+                    <center>
+                        <button type="submit" class="btn btn-primary">Verificar</button>
+                    </center>
+                </form>
+                {% if   error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+                {% endif %}
+
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+    </div>
+</div>
+
+{%endblock%}

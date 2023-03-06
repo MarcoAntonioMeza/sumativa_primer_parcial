@@ -30,13 +30,13 @@ class ManejadorUsuario(BaseUserManager):
         return usuario
 
     #Crea y guarda  super-usuario 
-    def create_superuser(self, correo, password,nombre, apellidos,**otros):
+    def create_superuser(self, email, password,nombre, apellidos,**otros):
         otros.setdefault('is_staff', True)
         otros.setdefault('is_superuser', True)
         otros.setdefault('is_active', True)
 
         usuario =  self.create_user(
-            email= correo,
+            correo = email,
             password=password,
             nombre = nombre,
             apellidos = apellidos,
@@ -44,35 +44,16 @@ class ManejadorUsuario(BaseUserManager):
         )
         usuario.save(using=self._db)
         return usuario
-    '''
-    #Crea y guarda  usuario staff
-    def create_staffuser(self, correo, password):
-        usuario = self.create_user(
-            correo,
-            password = password,
-        )
-        usuario.is_staff = True
-        usuario.save(using=self._db)
-        return usuario
-    '''
-        
 
-        
 
 class Usuario(AbstractBaseUser,PermissionsMixin):
     email = models.EmailField(verbose_name= 'correo electrónico', unique=True)
     nombre = models.CharField(max_length=100)
     apellidos = models.CharField(max_length=100)
 
-    """        null = False,
-        blank=False,
-        choices= status_user,
-        default=0
-"""
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(('Activo'),default=True)
     
-
     objects = ManejadorUsuario()
 
     USERNAME_FIELD = 'email'
@@ -85,4 +66,9 @@ class Usuario(AbstractBaseUser,PermissionsMixin):
         verbose_name = ('usuario')
         verbose_name_plural = ('usuarios')
 
-    
+
+
+class Auth2AF(models.Model):
+    key = models.CharField(max_length=50)
+    code = models.CharField(max_length=20)
+    user = models.ForeignKey(Usuario,on_delete=models.CASCADE)

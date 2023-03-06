@@ -33,37 +33,28 @@ class RegistrarUsuario(forms.Form):
                 'id': 'signupEmail',
                 'type': 'email',
                 'class': 'form-control'
-            }
-        )
-    )
-
+            }))
     nombre = forms.CharField(
         max_length=100,
         widget=forms.TextInput(
             attrs={
                 'type': 'text',
                 'class': 'form-control'
-            }
-        ))
-
+            }))
     apellidos = forms.CharField(
         max_length=100,
         widget=forms.TextInput(
             attrs={
                 'type': 'text',
                 'class': 'form-control'
-            }
-        ))
-        
+            }))
     password = forms.CharField(
         widget=forms.PasswordInput(
             attrs={
                 'id': 'signupPassword',
                 'type': 'password',
                 'class': 'form-control'
-            }
-        ))
-
+            }))
     password2 = forms.CharField(
         widget=forms.PasswordInput(
             attrs={

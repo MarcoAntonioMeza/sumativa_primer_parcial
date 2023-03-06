@@ -6,9 +6,9 @@ from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.defaults import page_not_found
 from user.forms import *
-from user.models import Usuario
-
-import json
+from user.models import Usuario, Auth2AF
+from . import codigo as totp
+from . import envioCorreo as envio
 
 # Create your views here.
 
@@ -19,15 +19,50 @@ def login_usurio(request):
         if login_form.is_valid():
             correo = login_form.cleaned_data.get('email')
             password = login_form.cleaned_data.get('password')
+
             user = authenticate(request, email=correo, password=password)
+
             if user is not None:
-                login(request, user)
-                return redirect('home')
+                key = totp.generar_key()
+                codigo = totp.generar_codigo(key)
+                a = envio.send_user_mail(correo,codigo)
+                print(a)
+
+                #user = Usuario.objects.get(email=correo)
+                user.auth2af_set.create(key = key, code= codigo)
+
+                return render(request,'usuarios/verificacion.html', {
+                    'correo' : correo,
+                    'dino_se' : password,
+                    'error' : False
+                })
             else:
                 return render(request, 'usuarios/login.html')
-
-        # messages.error(request, 'Formulario Invalido')
     return render(request, 'usuarios/login.html')
+
+def validar_codigo(request):
+    if request.POST:
+        code = request.POST['code']
+        email = request.POST['correo']
+        password = request.POST['dino']
+
+        usuario = Usuario.objects.get(email=email)
+        #usuario.auth2af_set.all().delete()
+        
+        info_user = usuario.auth2af_set.get()
+
+        if code == info_user.code:
+            user = authenticate(request, email=email, password=password)
+            login(request, user)
+            usuario.auth2af_set.all().delete()
+            return redirect('home')
+        else: 
+            return render(request,'usuarios/verificacion.html', {
+                    'correo' : email,
+                    'dino_se' : password,
+                    'error' : 'El código es incorrecto'
+                })
+    
 
 
 def registar_usuarios(request):

@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -97,7 +98,6 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
         '''
 DATABASES = {
-    
         'default':  dj_database_url.config(        
         default='postgresql://postgres:postgres@localhost:5432/mysite',   
         conn_max_age=600   
@@ -158,9 +158,18 @@ AUTH_USER_MODEL = "user.Usuario"
 
 # Config demo mail
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+#EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "mail.codevs.com.mx"
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "test@codevs.com.mx"
 EMAIL_HOST_PASSWORD = "hJid{nbL;j3%"
+"""
+
+
+EMAIL_HOST = 'smtp-mail.outlook.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'cuentadev2022@outlook.com'
+EMAIL_HOST_PASSWORD = 'UCma2022'
+EMAIL_USE_TLS = True
+"""

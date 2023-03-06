@@ -158,7 +158,7 @@ AUTH_USER_MODEL = "user.Usuario"
 
 # Config demo mail
 
-#EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "mail.codevs.com.mx"
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587

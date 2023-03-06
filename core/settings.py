@@ -157,7 +157,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "user.Usuario"
 
 # Config demo mail
-
+"""
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "mail.codevs.com.mx"
 EMAIL_USE_TLS = True
@@ -172,4 +172,3 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'cuentadev2022@outlook.com'
 EMAIL_HOST_PASSWORD = 'UCma2022'
 EMAIL_USE_TLS = True
-"""
